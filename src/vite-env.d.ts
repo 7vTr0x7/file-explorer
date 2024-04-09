@@ -21,3 +21,8 @@ type ExplorerType = {
     }[];
   }[];
 };
+
+type StateType = {
+  visibility: boolean;
+  isFolder: boolean;
+};
