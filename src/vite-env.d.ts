@@ -26,3 +26,10 @@ type StateType = {
   visibility: boolean;
   isFolder: boolean;
 };
+
+type NodeType = {
+  explorerData: ExplorerType;
+  folderId: string;
+  item: string;
+  isFolder: boolean;
+};

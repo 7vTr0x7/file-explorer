@@ -1,12 +1,13 @@
 import { useState } from "react";
 
 type ParamType = {
+  handleInsertNode: (isFolder: boolean, item: string, folderId: string) => void;
   explorerData: ExplorerType;
 };
 
-const Folder = ({ explorerData }: ParamType) => {
-  const [expand, setExpand] = useState(false);
-
+const Folder = ({ handleInsertNode, explorerData }: ParamType) => {
+  const [expand, setExpand] = useState<boolean>(false);
+  const [inputText, setInputText] = useState<string>("");
   const [showInput, setShowInput] = useState<StateType>({
     visibility: false,
     isFolder: false,
@@ -25,7 +26,8 @@ const Folder = ({ explorerData }: ParamType) => {
   };
 
   const onFolder = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.keyCode === 13) {
+    if (e.key === "Enter" && inputText) {
+      handleInsertNode(showInput.isFolder, inputText, explorerData.id);
       setShowInput({ ...showInput, visibility: false });
     }
   };
@@ -59,6 +61,8 @@ const Folder = ({ explorerData }: ParamType) => {
                 <span className="mt-1">{showInput.isFolder ? "📁" : "📄"}</span>
                 <input
                   type="text"
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
                   onKeyDown={(e) => onFolder(e)}
                   onBlur={() =>
                     setShowInput({ ...showInput, visibility: false })
@@ -70,7 +74,13 @@ const Folder = ({ explorerData }: ParamType) => {
             )}
 
             {explorerData.items.map((exp) => {
-              return <Folder explorerData={exp} key={exp.id} />;
+              return (
+                <Folder
+                  handleInsertNode={handleInsertNode}
+                  explorerData={exp}
+                  key={exp.id}
+                />
+              );
             })}
           </div>
         </div>
