@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css";
+
 import { explorer } from "./utils/data";
 import Folder from "./components/Folder";
 
